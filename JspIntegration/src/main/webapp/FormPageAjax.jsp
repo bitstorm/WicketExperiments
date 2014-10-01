@@ -9,8 +9,6 @@
 </head>
 <body>
 	Send a parameter to Wicket page via AJAX.
-	<a href="#" onClick="${wicket:ajaxGetWithQuery('param=value')}">Send parameter</a>
-	
 	
 	<form id="form" method="post" onsubmit="${wicket:ajaxFormSubmit('POST')}">
         <input type="text" name="textvalue" value="testvalue">
