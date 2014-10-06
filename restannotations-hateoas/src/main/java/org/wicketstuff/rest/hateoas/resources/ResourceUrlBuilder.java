@@ -18,13 +18,7 @@ package org.wicketstuff.rest.hateoas.resources;
 
 import static org.mockito.Mockito.mock;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -33,15 +27,8 @@ import org.apache.wicket.request.resource.ResourceReference.Key;
 import org.apache.wicket.util.string.Strings;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.wicketstuff.rest.annotations.parameters.PathParam;
 import org.wicketstuff.rest.resource.AbstractRestResource;
 import org.wicketstuff.rest.resource.MethodMappingInfo;
-import org.wicketstuff.rest.resource.urlsegments.AbstractURLSegment;
-import org.wicketstuff.rest.resource.urlsegments.FixedURLSegment;
-import org.wicketstuff.rest.resource.urlsegments.MultiParamSegment;
-import org.wicketstuff.rest.resource.urlsegments.ParamSegment;
-import org.wicketstuff.rest.resource.urlsegments.visitor.ISegmentVisitor;
-import org.wicketstuff.rest.utils.reflection.MethodParameter;
 
 public class ResourceUrlBuilder
 {
@@ -96,93 +83,5 @@ class MappedMethodInterceptor implements Answer<String>
 	{
 		SegmentGeneratorVisitor visitor = new SegmentGeneratorVisitor(methodInfo, args);
 		return Strings.join("/", visitor.getActualSegments());
-	}
-
-}
-
-class SegmentGeneratorVisitor implements ISegmentVisitor
-{
-	private final List<MethodParameter<?>> namedParams;
-	private final List<AbstractURLSegment> segments;
-	private final List<String> actualSegments;
-	private final Iterator<Object> valuesIterator;
-	private final Object[] paramsValues;
-
-	public SegmentGeneratorVisitor(MethodMappingInfo methodInfo, Object[] paramsValues)
-	{
-		Map<Class<? extends Annotation>, List<MethodParameter<?>>> annotatedParams 
-					= methodInfo.getAnnotatedMethodParameters();
-		
-		this.namedParams = annotatedParams.get(PathParam.class);
-		this.segments = methodInfo.getSegments();
-		this.actualSegments = new ArrayList<String>();
-		this.valuesIterator = Arrays.asList(paramsValues).iterator();
-		this.paramsValues = paramsValues;
-		
-		generateSegments();
-	}
-	
-	private List<String> generateSegments()
-	{
-		for (AbstractURLSegment abstractURLSegment : segments)
-		{
-			abstractURLSegment.accept(this);
-		}
-		
-		return actualSegments;
-	}
-	
-	@Override
-	public void visit(FixedURLSegment segment)
-	{
-		actualSegments.add(segment.toString());
-	}
-
-	@Override
-	public void visit(MultiParamSegment segment)
-	{
-		for (AbstractURLSegment urlSegment : segment.getSubSegments())
-		{
-			urlSegment.accept(this);
-		}
-	}
-
-	@Override
-	public void visit(ParamSegment segment)
-	{
-		String paramValue = findParamValue(segment.getParamName());
-		
-		if(paramValue != null)
-		{
-			actualSegments.add(paramValue);
-		} else 
-		{
-			actualSegments.add(valuesIterator.next().toString());			
-		}
-	}
-
-	private String findParamValue(String paramName)
-	{
-		if(namedParams == null)
-		{
-			return null;			
-		}
-		
-		for (MethodParameter<?> namedParam : namedParams)
-		{
-			PathParam pathParam = (PathParam)namedParam.getAnnotationParam();
-			
-			if(pathParam.value().equals(paramName))
-			{
-				return paramsValues[namedParam.getParamIndex()].toString();
-			}
-		}
-		
-		return null;
-	}
-
-	public List<String> getActualSegments()
-	{
-		return actualSegments;
 	}
 }
