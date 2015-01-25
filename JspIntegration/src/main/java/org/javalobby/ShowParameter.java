@@ -11,8 +11,10 @@ public class ShowParameter extends WebPage
 	public ShowParameter(PageParameters parameters)
 	{
 		super(parameters);
-		add(new Label("textvalue", RequestCycle.get().getRequest()
+		add(new Label("textvaluePost", RequestCycle.get().getRequest()
 		    .getPostParameters().getParameterValue("textvalue")));
+		add(new Label("textvalueGet", RequestCycle.get().getRequest()
+		    .getQueryParameters().getParameterValue("name")));
 	}
 	
 }
