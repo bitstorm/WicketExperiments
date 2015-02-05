@@ -8,11 +8,16 @@
 <title>Send a parameter to Wicket page via AJAX</title>
 </head>
 <body>
-	Send a parameter to Wicket page via AJAX.
+	Send a parameter to Wicket page via AJAX with a form.
 	
 	<form id="form" method="post" onsubmit="${wicket:ajaxFormSubmit('POST')}">
-        <input type="text" name="textvalue" value="testvalue">
-        <input type="submit" value="Submit">
+        <input type="text" name="textvalue" value="testvalue"/>
+        <input type="submit" value="Submit"/>
     </form>
+    
+    <p>
+    You can also use a simple link to send query parameters. 
+    <a href="#" onClick="${wicket:ajaxGetWithQuery('textvalue=theLinkName')}">Click here</a> to send parameter 'textvalue=theLinkName'.
+    </p>
 </body>
 </html>
