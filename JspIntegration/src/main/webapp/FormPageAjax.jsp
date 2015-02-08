@@ -13,11 +13,6 @@
 	<form id="form" method="post" onsubmit="${wicket:ajaxFormSubmit('POST')}">
         <input type="text" name="textvalue" value="testvalue"/>
         <input type="submit" value="Submit"/>
-    </form>
-    
-    <p>
-    You can also use a simple link to send query parameters. 
-    <a href="#" onClick="${wicket:ajaxGetWithQuery('textvalue=theLinkName')}">Click here</a> to send parameter 'textvalue=theLinkName'.
-    </p>
+    </form>    
 </body>
 </html>
