@@ -39,7 +39,7 @@ public class ShowParameterAjax extends WebPage
 				paramVal = castedEvent.getPageParameters().get("textvalue");
 			}
 			
-			paramLabel.setDefaultModelObject("Last submitted value: " + paramVal);
+			paramLabel.setDefaultModelObject(paramVal);
 			
 			ajaxRequestTarget.add(paramLabel);
 		}
