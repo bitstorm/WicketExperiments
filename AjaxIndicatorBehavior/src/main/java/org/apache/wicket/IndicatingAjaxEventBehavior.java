@@ -90,7 +90,7 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 		
 		stringBuilder.append("<span class=\"")
 					.append(getSpanClass())
-					.append("\" ")
+					.append("\" style=\"position:absolute\"")
 					.append("id=\"")
 					.append(getMarkupId())
 					.append("\">")
