@@ -56,29 +56,24 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 	{
 		super.updateAjaxAttributes(attributes);
 		AjaxCallListener listener = new AjaxCallListener();
-		
-		listener.onBefore(renderIndicatorScript());
-		attributes.getAjaxCallListeners().add(listener);
-	}
-	
-	protected String renderIndicatorScript()
-	{
-		StringBuilder stringBuilder = new StringBuilder(256);
 		String componentId = getComponent().getMarkupId();
 		String indicatorId = getMarkupId();
 		
+		listener.onBefore(generateIndicatorScript(componentId, indicatorId, 
+			generateIndicatorMarkup()));
+		attributes.getAjaxCallListeners().add(listener);
+	}
+	
+	protected String generateIndicatorScript(String componentId, 
+		String indicatorId, StringBuilder indicatorMarkup)
+	{
+		StringBuilder stringBuilder = new StringBuilder(256);
 		stringBuilder.append("if(!$('#" + indicatorId + "').length) {");
 		stringBuilder.append("$('#" + componentId + "').append('");		
-		stringBuilder.append(generateIndicatorMarkup());
+		stringBuilder.append(indicatorMarkup);
 		stringBuilder.append("');\n}");
-		stringBuilder.append(postProcessIndicatorMarkup(indicatorId));
 		
 		return stringBuilder.toString();
-	}
-
-	private String postProcessIndicatorMarkup(String indicatorId)
-	{
-		return "";
 	}
 
 	/**
