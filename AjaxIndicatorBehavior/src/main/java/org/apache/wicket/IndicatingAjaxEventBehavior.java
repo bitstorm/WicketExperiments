@@ -67,13 +67,12 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 	protected String generateIndicatorScript(String componentId, 
 		String indicatorId, StringBuilder indicatorMarkup)
 	{
-		StringBuilder stringBuilder = new StringBuilder(256);
-		stringBuilder.append("if(!$('#" + indicatorId + "').length) {");
-		stringBuilder.append("$('#" + componentId + "').append('");		
-		stringBuilder.append(indicatorMarkup);
-		stringBuilder.append("');\n}");
+		String appendScript = "if($('#%s').length === 0) { \n" +
+								  "$('#%s').append('%s'); \n" +
+							   "}";
 		
-		return stringBuilder.toString();
+		return String.format(appendScript, 
+			indicatorId, componentId, indicatorMarkup);
 	}
 
 	/**
