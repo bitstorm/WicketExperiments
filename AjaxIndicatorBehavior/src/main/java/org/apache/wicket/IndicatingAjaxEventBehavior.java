@@ -32,6 +32,8 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/** Resource reference for the indicator element */
 	private final ResourceReference indicatorPicture;
 	
 	public IndicatingAjaxEventBehavior(String event)
@@ -64,6 +66,14 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 		attributes.getAjaxCallListeners().add(listener);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param componentId
+	 * @param indicatorId
+	 * @param indicatorMarkup
+	 * @return
+	 */
 	protected String generateIndicatorScript(String componentId, 
 		String indicatorId, StringBuilder indicatorMarkup)
 	{
@@ -76,6 +86,7 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 	}
 
 	/**
+	 * 
 	 * @param stringBuilder
 	 */
 	protected StringBuilder generateIndicatorMarkup()
@@ -84,13 +95,13 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 		
 		stringBuilder.append("<span class=\"")
 					.append(getSpanClass())
-					.append("\" style=\"position:absolute\"")
-					.append("id=\"")
-					.append(getMarkupId())
-					.append("\">")
+					.append("\" style=\"display:inline;position:absolute;\">")
 					.append("<img src=\"")
 				    .append(getIndicatorUrl())
-					.append("\" alt=\"\"/></span>");
+					.append("\" alt=\"\" ")
+					.append("id=\"")
+					.append(getMarkupId())
+					.append( "\" /></span>");
 		
 		return stringBuilder;
 	}
@@ -129,5 +140,4 @@ public class IndicatingAjaxEventBehavior extends AjaxEventBehavior
 	{
 	
 	}
-
 }
