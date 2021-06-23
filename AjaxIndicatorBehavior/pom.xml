@@ -42,7 +42,7 @@
 	</licenses>
 	<properties>
 		<wicket.version>7.17.0</wicket.version>
-		<jetty9.version> 9.4.17.v20190418</jetty9.version>
+		<jetty9.version>9.4.41.v20210516</jetty9.version>
 		<log4j.version>2.2</log4j.version>
 		<junit.version>4.12</junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
